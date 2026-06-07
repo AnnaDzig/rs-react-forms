@@ -5,6 +5,7 @@ import { FormActions } from './components/FormActions/FormActions';
 import { SubmissionsList } from './components/SubmissionsList/SubmissionsList';
 import type { FormSource } from './features/forms/types/formTypes';
 import { Modal } from './components/Modal/Modal';
+import { UncontrolledForm } from './features/forms/components/UncontrolledForm/UncontrolledForm';
 
 import './App';
 
@@ -43,7 +44,11 @@ function App() {
           }
           onClose={closeModal}
         >
-          <p>Form placeholder.</p>
+          {activeForm === 'uncontrolled' ? (
+            <UncontrolledForm onSuccess={closeModal} />
+          ) : (
+            <p>React Hook Form placeholder.</p>
+          )}
         </Modal>
       ) : null}
     </main>
