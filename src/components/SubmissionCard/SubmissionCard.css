@@ -1,0 +1,30 @@
+.submission-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 0.5rem 1.5rem rgb(15 23 42 / 8%);
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.submission-card--new {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.submission-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.submission-card__image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 999px;
+  object-fit: cover;
+}
