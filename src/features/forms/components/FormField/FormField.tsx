@@ -8,6 +8,7 @@ type FormFieldProps = {
   error?: string;
   errorId: string;
   hint?: string;
+  htmlFor: string;
   label: string;
 };
 
@@ -16,12 +17,16 @@ export function FormField({
   error,
   errorId,
   hint,
+  htmlFor,
   label,
 }: FormFieldProps) {
   return (
     <div className="form-field">
       <div className="form-field__label-row">
-        <span className="form-field__label">{label}</span>
+        <label className="form-field__label" htmlFor={htmlFor}>
+          {label}
+        </label>
+
         {hint ? <span className="form-field__hint">{hint}</span> : null}
       </div>
 

@@ -53,7 +53,7 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
     setImageBase64(convertedImage);
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -94,6 +94,7 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
     setErrors(initialErrors);
     setPassword('');
     setImageBase64('');
+    setImageError(undefined);
     onSuccess();
   }
 
@@ -103,104 +104,94 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
         <FormField
           error={errors.name}
           errorId="uncontrolled-name-error"
+          htmlFor="uncontrolled-name"
           label="Name"
         >
-          <label className="form__label" htmlFor="uncontrolled-name">
-            <span className="form__sr-only">Name</span>
-            <input
-              aria-describedby="uncontrolled-name-error"
-              aria-invalid={Boolean(errors.name)}
-              className="form__input"
-              id="uncontrolled-name"
-              name="name"
-              placeholder="Anna"
-              type="text"
-            />
-          </label>
+          <input
+            aria-describedby="uncontrolled-name-error"
+            aria-invalid={Boolean(errors.name)}
+            className="form__input"
+            id="uncontrolled-name"
+            name="name"
+            placeholder="Anna"
+            type="text"
+          />
         </FormField>
 
         <FormField
           error={errors.age}
           errorId="uncontrolled-age-error"
+          htmlFor="uncontrolled-age"
           label="Age"
         >
-          <label className="form__label" htmlFor="uncontrolled-age">
-            <span className="form__sr-only">Age</span>
-            <input
-              aria-describedby="uncontrolled-age-error"
-              aria-invalid={Boolean(errors.age)}
-              className="form__input"
-              id="uncontrolled-age"
-              name="age"
-              min="0"
-              placeholder="35"
-              type="number"
-            />
-          </label>
+          <input
+            aria-describedby="uncontrolled-age-error"
+            aria-invalid={Boolean(errors.age)}
+            className="form__input"
+            id="uncontrolled-age"
+            min="0"
+            name="age"
+            placeholder="35"
+            type="number"
+          />
         </FormField>
       </div>
 
       <FormField
         error={errors.email}
         errorId="uncontrolled-email-error"
+        htmlFor="uncontrolled-email"
         label="Email"
       >
-        <label className="form__label" htmlFor="uncontrolled-email">
-          <span className="form__sr-only">Email</span>
-          <input
-            aria-describedby="uncontrolled-email-error"
-            aria-invalid={Boolean(errors.email)}
-            className="form__input"
-            id="uncontrolled-email"
-            name="email"
-            placeholder="anna@example.com"
-            type="email"
-          />
-        </label>
+        <input
+          aria-describedby="uncontrolled-email-error"
+          aria-invalid={Boolean(errors.email)}
+          className="form__input"
+          id="uncontrolled-email"
+          name="email"
+          placeholder="anna@example.com"
+          type="email"
+        />
       </FormField>
 
       <div className="form__grid">
         <FormField
           error={errors.gender}
           errorId="uncontrolled-gender-error"
+          htmlFor="uncontrolled-gender"
           label="Gender"
         >
-          <label className="form__label" htmlFor="uncontrolled-gender">
-            <span className="form__sr-only">Gender</span>
-            <select
-              aria-describedby="uncontrolled-gender-error"
-              aria-invalid={Boolean(errors.gender)}
-              className="form__select"
-              id="uncontrolled-gender"
-              name="gender"
-            >
-              <option value="">Choose gender</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-              <option value="prefer-not-to-say">Prefer not to say</option>
-            </select>
-          </label>
+          <select
+            aria-describedby="uncontrolled-gender-error"
+            aria-invalid={Boolean(errors.gender)}
+            className="form__select"
+            id="uncontrolled-gender"
+            name="gender"
+          >
+            <option value="">Choose gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="other">Other</option>
+            <option value="prefer-not-to-say">Prefer not to say</option>
+          </select>
         </FormField>
 
         <FormField
           error={errors.country}
           errorId="uncontrolled-country-error"
+          htmlFor="uncontrolled-country"
           label="Country"
         >
-          <label className="form__label" htmlFor="uncontrolled-country">
-            <span className="form__sr-only">Country</span>
-            <input
-              aria-describedby="uncontrolled-country-error"
-              aria-invalid={Boolean(errors.country)}
-              className="form__input"
-              id="uncontrolled-country"
-              list="uncontrolled-countries"
-              name="country"
-              placeholder="Denmark"
-              type="text"
-            />
-          </label>
+          <input
+            aria-describedby="uncontrolled-country-error"
+            aria-invalid={Boolean(errors.country)}
+            className="form__input"
+            id="uncontrolled-country"
+            list="uncontrolled-countries"
+            name="country"
+            placeholder="Denmark"
+            type="text"
+          />
           <CountryDatalist countries={countries} id="uncontrolled-countries" />
         </FormField>
       </div>
@@ -209,21 +200,19 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
         error={imageError ?? errors.imageBase64}
         errorId="uncontrolled-image-error"
         hint="PNG or JPEG, max 1MB"
+        htmlFor="uncontrolled-image"
         label="Profile image"
       >
-        <label className="form__label" htmlFor="uncontrolled-image">
-          <span className="form__sr-only">Profile image</span>
-          <input
-            accept="image/png,image/jpeg"
-            aria-describedby="uncontrolled-image-error"
-            aria-invalid={Boolean(imageError ?? errors.imageBase64)}
-            className="form__input uncontrolled-form__file"
-            id="uncontrolled-image"
-            name="image"
-            type="file"
-            onChange={handleImageChange}
-          />
-        </label>
+        <input
+          accept="image/png,image/jpeg"
+          aria-describedby="uncontrolled-image-error"
+          aria-invalid={Boolean(imageError ?? errors.imageBase64)}
+          className="form__input uncontrolled-form__file"
+          id="uncontrolled-image"
+          name="image"
+          type="file"
+          onChange={handleImageChange}
+        />
       </FormField>
 
       {imageBase64 ? (
@@ -238,42 +227,35 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
         <FormField
           error={errors.password}
           errorId="uncontrolled-password-error"
+          htmlFor="uncontrolled-password"
           label="Password"
         >
-          <label className="form__label" htmlFor="uncontrolled-password">
-            <span className="form__sr-only">Password</span>
-            <input
-              aria-describedby="uncontrolled-password-error"
-              aria-invalid={Boolean(errors.password)}
-              className="form__input"
-              id="uncontrolled-password"
-              name="password"
-              type="password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
+          <input
+            aria-describedby="uncontrolled-password-error"
+            aria-invalid={Boolean(errors.password)}
+            className="form__input"
+            id="uncontrolled-password"
+            name="password"
+            type="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
           <PasswordStrength password={password} />
         </FormField>
 
         <FormField
           error={errors.confirmPassword}
           errorId="uncontrolled-confirm-password-error"
+          htmlFor="uncontrolled-confirm-password"
           label="Confirm password"
         >
-          <label
-            className="form__label"
-            htmlFor="uncontrolled-confirm-password"
-          >
-            <span className="form__sr-only">Confirm password</span>
-            <input
-              aria-describedby="uncontrolled-confirm-password-error"
-              aria-invalid={Boolean(errors.confirmPassword)}
-              className="form__input"
-              id="uncontrolled-confirm-password"
-              name="confirmPassword"
-              type="password"
-            />
-          </label>
+          <input
+            aria-describedby="uncontrolled-confirm-password-error"
+            aria-invalid={Boolean(errors.confirmPassword)}
+            className="form__input"
+            id="uncontrolled-confirm-password"
+            name="confirmPassword"
+            type="password"
+          />
         </FormField>
       </div>
 
@@ -288,6 +270,7 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
           />
           <span>I accept Terms and Conditions</span>
         </label>
+
         <ErrorMessage
           id="uncontrolled-terms-error"
           message={errors.acceptedTerms}

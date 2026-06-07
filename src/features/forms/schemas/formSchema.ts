@@ -1,10 +1,17 @@
 import { z } from 'zod';
 
+import type { Gender } from '../types/formTypes';
 import { isBasicEmailValid } from '../utils/emailValidation';
 
 const MAX_IMAGE_SIZE_IN_BYTES = 1024 * 1024;
 
+const genders = ['female', 'male', 'other', 'prefer-not-to-say'] as const;
+
 export const allowedImageTypes = ['image/png', 'image/jpeg'] as const;
+
+function isGender(value: string): value is Gender {
+  return genders.some((gender) => gender === value);
+}
 
 export const formSchema = z
   .object({
@@ -35,11 +42,11 @@ export const formSchema = z
         message: 'Email must contain one @ and a domain with a dot',
       }),
 
-    gender: z.enum(['female', 'male', 'other', 'prefer-not-to-say'], {
+    gender: z.string().refine(isGender, {
       message: 'Gender is required',
     }),
 
-    acceptedTerms: z.literal(true, {
+    acceptedTerms: z.boolean().refine((value) => value, {
       message: 'You must accept Terms and Conditions',
     }),
 
