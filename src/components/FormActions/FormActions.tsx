@@ -1,4 +1,4 @@
-import './FormActions';
+import './FormActions.css';
 
 type FormActionsProps = {
   onOpenUncontrolledForm: () => void;

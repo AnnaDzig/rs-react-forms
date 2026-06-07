@@ -1,4 +1,4 @@
-import './AppHeader';
+import './AppHeader.css';
 
 export function AppHeader() {
   return (

@@ -4,6 +4,8 @@ import { AppHeader } from './components/AppHeader/AppHeader';
 import { FormActions } from './components/FormActions/FormActions';
 import { SubmissionsList } from './components/SubmissionsList/SubmissionsList';
 import type { FormSource } from './features/forms/types/formTypes';
+import { Modal } from './components/Modal/Modal';
+
 import './App';
 
 function App() {
@@ -33,12 +35,16 @@ function App() {
       <SubmissionsList />
 
       {activeForm ? (
-        <p className="app__temporary-modal-note">
-          Modal placeholder: {activeForm}
-          <button type="button" onClick={closeModal}>
-            Close
-          </button>
-        </p>
+        <Modal
+          title={
+            activeForm === 'uncontrolled'
+              ? 'Uncontrolled form'
+              : 'React Hook Form'
+          }
+          onClose={closeModal}
+        >
+          <p>Form placeholder.</p>
+        </Modal>
       ) : null}
     </main>
   );

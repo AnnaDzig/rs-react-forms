@@ -1,5 +1,5 @@
 import { useFormStore } from '../../features/forms/store/formStore';
-import './SubmissionsList';
+import './SubmissionsList.css';
 
 export function SubmissionsList() {
   const submissions = useFormStore((state) => state.submissions);
