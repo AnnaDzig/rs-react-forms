@@ -1,0 +1,10 @@
+.uncontrolled-form__file {
+  padding-top: 0.625rem;
+}
+
+.uncontrolled-form__preview {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1rem;
+  object-fit: cover;
+}

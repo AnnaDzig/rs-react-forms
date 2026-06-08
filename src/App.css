@@ -1,0 +1,15 @@
+.app {
+  display: grid;
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+  gap: 1.5rem;
+}
+
+@media (max-width: 40rem) {
+  .app {
+    width: min(100% - 1rem, 76rem);
+    padding: 1rem 0 2rem;
+    gap: 1rem;
+  }
+}

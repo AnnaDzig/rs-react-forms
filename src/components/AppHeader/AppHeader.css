@@ -1,0 +1,52 @@
+.app-header {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid rgb(148 163 184 / 18%);
+  border-radius: 1.75rem;
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 96%),
+    rgb(239 246 255 / 96%)
+  );
+  box-shadow: 0 1.25rem 3rem rgb(15 23 42 / 8%);
+}
+
+.app-header__eyebrow {
+  margin: 0;
+  color: #3157d5;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.app-header__title {
+  margin: 0;
+  color: #172033;
+  font-size: clamp(2.2rem, 5vw, 4.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.app-header__description {
+  max-width: 44rem;
+  color: #475569;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 40rem) {
+  .app-header {
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+  }
+
+  .app-header__title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .app-header__description {
+    font-size: 1rem;
+  }
+}
