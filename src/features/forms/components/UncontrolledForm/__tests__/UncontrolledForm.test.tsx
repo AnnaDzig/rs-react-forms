@@ -180,4 +180,26 @@ describe('UncontrolledForm', () => {
 
     expect(useFormStore.getState().submissions).toHaveLength(0);
   });
+
+  it('shows image validation error when image is too large', async () => {
+    const { form, user } = renderUncontrolledForm();
+    const formQueries = within(form);
+
+    const largeFile = new File(
+      [new Uint8Array(1024 * 1024 + 1)],
+      'avatar.png',
+      {
+        type: 'image/png',
+      }
+    );
+
+    await user.upload(
+      formQueries.getByLabelText(/^profile image$/i),
+      largeFile
+    );
+
+    expect(
+      screen.getByText(/^image must be smaller than 1mb$/i)
+    ).toBeInTheDocument();
+  });
 });

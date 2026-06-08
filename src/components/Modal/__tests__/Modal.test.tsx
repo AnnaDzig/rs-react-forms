@@ -82,4 +82,33 @@ describe('Modal', () => {
 
     expect(closeButton).toHaveFocus();
   });
+  it('closes when clicking on the backdrop', async () => {
+    const onClose = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <Modal title="Test modal" onClose={onClose}>
+        <button type="button">Inside button</button>
+      </Modal>
+    );
+
+    await user.click(screen.getByRole('presentation'));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not close when clicking inside the dialog', async () => {
+    const onClose = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <Modal title="Test modal" onClose={onClose}>
+        <button type="button">Inside button</button>
+      </Modal>
+    );
+
+    await user.click(screen.getByRole('button', { name: /inside button/i }));
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
 });

@@ -1,6 +1,82 @@
 import { describe, expect, it } from 'vitest';
 
-import { validateImageFile } from './formSchema';
+import { createFormSchema, validateImageFile } from './formSchema';
+
+const validValues = {
+  name: 'Anna',
+  age: '35',
+  email: 'anna@example.com',
+  gender: 'female',
+  acceptedTerms: true,
+  imageBase64: 'data:image/png;base64,test-image',
+  password: 'Anna123!',
+  confirmPassword: 'Anna123!',
+  country: 'Denmark',
+};
+
+describe('createFormSchema', () => {
+  it('accepts valid form values', () => {
+    const result = createFormSchema(['Denmark', 'Ukraine']).safeParse(
+      validValues
+    );
+
+    expect(result.success).toBe(true);
+  });
+
+  it('rejects lowercase name', () => {
+    const result = createFormSchema().safeParse({
+      ...validValues,
+      name: 'anna',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects negative age', () => {
+    const result = createFormSchema().safeParse({
+      ...validValues,
+      age: '-1',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects non-number age', () => {
+    const result = createFormSchema().safeParse({
+      ...validValues,
+      age: 'abc',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects invalid gender', () => {
+    const result = createFormSchema().safeParse({
+      ...validValues,
+      gender: '',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects country outside provided countries list', () => {
+    const result = createFormSchema(['Denmark']).safeParse({
+      ...validValues,
+      country: 'Wonderland',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects different passwords', () => {
+    const result = createFormSchema().safeParse({
+      ...validValues,
+      confirmPassword: 'Different123!',
+    });
+
+    expect(result.success).toBe(false);
+  });
+});
 
 describe('validateImageFile', () => {
   it('returns null for PNG images', () => {
