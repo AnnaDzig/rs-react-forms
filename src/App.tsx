@@ -8,6 +8,7 @@ import { Modal } from './components/Modal/Modal';
 import { UncontrolledForm } from './features/forms/components/UncontrolledForm/UncontrolledForm';
 
 import './App';
+import { ReactHookForm } from './features/forms/components/ReactHookForm/ReactHookForm';
 
 function App() {
   const [activeForm, setActiveForm] = useState<FormSource | null>(null);
@@ -47,7 +48,7 @@ function App() {
           {activeForm === 'uncontrolled' ? (
             <UncontrolledForm onSuccess={closeModal} />
           ) : (
-            <p>React Hook Form placeholder.</p>
+            <ReactHookForm onSuccess={closeModal} />
           )}
         </Modal>
       ) : null}

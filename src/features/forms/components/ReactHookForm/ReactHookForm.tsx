@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   useForm,
   useWatch,
@@ -11,11 +11,7 @@ import { CountryDatalist } from '../CountryDatalist/CountryDatalist';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { FormField } from '../FormField/FormField';
 import { PasswordStrength } from '../PasswordStrength/PasswordStrength';
-import {
-  formSchema,
-  validateCountry,
-  validateImageFile,
-} from '../../schemas/formSchema';
+import { createFormSchema, validateImageFile } from '../../schemas/formSchema';
 import { useFormStore } from '../../store/formStore';
 import type { FormValues } from '../../types/formTypes';
 import { createSubmission } from '../../utils/createSubmission';
@@ -42,16 +38,18 @@ const defaultValues: FormValues = {
 export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
   const countries = useFormStore((state) => state.countries);
   const addSubmission = useFormStore((state) => state.addSubmission);
+
+  const formSchema = useMemo(() => createFormSchema(countries), [countries]);
+
   const [imagePreview, setImagePreview] = useState('');
   const [imageError, setImageError] = useState<string>();
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     register,
     reset,
-    setError,
     setValue,
   } = useForm<FormValues>({
     defaultValues,
@@ -96,23 +94,9 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
   }
 
   const submitForm: SubmitHandler<FormValues> = (values) => {
-    const parsedValues = formSchema.safeParse(values);
-
-    if (!parsedValues.success) {
-      return;
-    }
-
-    if (!validateCountry(parsedValues.data.country, countries)) {
-      setError('country', {
-        message: 'Choose a country from the list',
-        type: 'validate',
-      });
-      return;
-    }
-
     addSubmission(
       createSubmission({
-        values: parsedValues.data,
+        values,
         source: 'react-hook-form',
       })
     );
@@ -242,9 +226,9 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
 
       {imagePreview ? (
         <img
+          alt="Selected profile preview"
           className="react-hook-form__preview"
           src={imagePreview}
-          alt="Selected profile preview"
         />
       ) : null}
 
@@ -287,6 +271,7 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
         <label className="form__checkbox-label" htmlFor="rhf-terms">
           <input
             aria-describedby="rhf-terms-error"
+            aria-invalid={Boolean(errors.acceptedTerms)}
             className="form__checkbox"
             id="rhf-terms"
             type="checkbox"
@@ -301,7 +286,11 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
       </div>
 
       <div className="form__actions">
-        <button className="form__button" disabled={!isValid} type="submit">
+        <button
+          className="form__button"
+          disabled={!isValid || Boolean(imageError) || isSubmitting}
+          type="submit"
+        >
           Submit React Hook Form
         </button>
       </div>

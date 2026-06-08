@@ -175,16 +175,10 @@ describe('ReactHookForm', () => {
     });
   });
 
-  it('keeps submit disabled when country is not from the stored list', async () => {
-    const { form, submitButton, user } = renderReactHookForm();
+  it('shows country validation error when country is not from the stored list', async () => {
+    const { form, user } = renderReactHookForm();
 
     await fillValidReactHookForm(user, form, 'Wonderland');
-
-    await waitFor(() => {
-      expect(submitButton).toBeEnabled();
-    });
-
-    await user.click(submitButton);
 
     expect(
       await screen.findByText(/^choose a country from the list$/i)
