@@ -1,8 +1,35 @@
+import { useEffect } from 'react';
+
 import { useFormStore } from '../../features/forms/store/formStore';
 import './SubmissionsList.css';
 
+const NEW_SUBMISSION_HIGHLIGHT_TIME = 3000;
+
 export function SubmissionsList() {
   const submissions = useFormStore((state) => state.submissions);
+  const markSubmissionAsOld = useFormStore(
+    (state) => state.markSubmissionAsOld
+  );
+
+  useEffect(() => {
+    const newSubmissions = submissions.filter((submission) => submission.isNew);
+
+    if (newSubmissions.length === 0) {
+      return;
+    }
+
+    const timeoutIds = newSubmissions.map((submission) =>
+      window.setTimeout(() => {
+        markSubmissionAsOld(submission.id);
+      }, NEW_SUBMISSION_HIGHLIGHT_TIME)
+    );
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => {
+        window.clearTimeout(timeoutId);
+      });
+    };
+  }, [markSubmissionAsOld, submissions]);
 
   return (
     <section className="submissions" aria-labelledby="submissions-title">
