@@ -6,7 +6,7 @@ import { SubmissionsList } from './components/SubmissionsList/SubmissionsList';
 import type { FormSource } from './features/forms/types/formTypes';
 import { Modal } from './components/Modal/Modal';
 import { UncontrolledForm } from './features/forms/components/UncontrolledForm/UncontrolledForm';
-
+import './App.css';
 import './App';
 import { ReactHookForm } from './features/forms/components/ReactHookForm/ReactHookForm';
 

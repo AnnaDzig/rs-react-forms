@@ -232,7 +232,7 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
         />
       ) : null}
 
-      <div className="form__grid">
+      <div className="">
         <FormField
           error={errors.password?.message}
           errorId="rhf-password-error"

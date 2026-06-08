@@ -223,7 +223,7 @@ export function UncontrolledForm({ onSuccess }: UncontrolledFormProps) {
         />
       ) : null}
 
-      <div className="form__grid">
+      <div className="">
         <FormField
           error={errors.password}
           errorId="uncontrolled-password-error"
