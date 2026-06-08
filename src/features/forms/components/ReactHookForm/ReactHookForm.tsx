@@ -1,6 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { useForm, type Resolver, type SubmitHandler } from 'react-hook-form';
+import {
+  useForm,
+  useWatch,
+  type Resolver,
+  type SubmitHandler,
+} from 'react-hook-form';
 
 import { CountryDatalist } from '../CountryDatalist/CountryDatalist';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
@@ -41,20 +46,23 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
   const [imageError, setImageError] = useState<string>();
 
   const {
+    control,
     formState: { errors, isValid },
     handleSubmit,
     register,
     reset,
     setError,
     setValue,
-    watch,
   } = useForm<FormValues>({
     defaultValues,
     mode: 'onChange',
     resolver: zodResolver(formSchema) as Resolver<FormValues>,
   });
 
-  const password = watch('password');
+  const password = useWatch({
+    control,
+    name: 'password',
+  });
 
   async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -255,7 +263,7 @@ export function ReactHookForm({ onSuccess }: ReactHookFormProps) {
             type="password"
             {...register('password')}
           />
-          <PasswordStrength password={password} />
+          <PasswordStrength password={password ?? ''} />
         </FormField>
 
         <FormField
